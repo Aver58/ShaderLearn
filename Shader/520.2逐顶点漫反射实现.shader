@@ -41,8 +41,7 @@ Shader "Unlit/520.2"
 			fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
 		
 			//根据Lambert定律计算漫反射 saturate函数将所得矢量或标量的值限定在[0,1]之间
-			fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb
-											  * saturate(dot(worldNormal,worldLight));
+			fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(worldNormal,worldLight));
 		
 			o.color = diffuse + ambient;
 			return o;
