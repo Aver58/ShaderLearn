@@ -29,7 +29,7 @@
 		    
 		    int index = floor(_Time .x * _Speed);
 		    int indexY = index/_SizeX;
-		    int indexX = index - indexY*_SizeX;
+		    int indexX = index - indexY * _SizeX;
 		    float2 testUV = float2(IN.uv_MainTex.x /_SizeX, IN.uv_MainTex.y /_SizeY);
 		    
 		    testUV.x += indexX/_SizeX;

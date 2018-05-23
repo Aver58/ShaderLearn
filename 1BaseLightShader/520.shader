@@ -1,68 +1,55 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+// Shader created with Shader Forge v1.37 
+// Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
+// Note: Manually altering this data may prevent you from opening it in Shader Forge
+/*SF_DATA;ver:1.37;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:1,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:False,hqlp:False,rprd:False,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:79,x:32719,y:32712,varname:node_79,prsc:2;pass:END;sub:END;*/
 
-Shader "Unlit/520"
-{
-	Properties
-	{
-		_Color("Color Tint",Color) = (1.0,1.0,1.0,1.0)
-	}
-	SubShader
-	{
-		LOD 100
-
-		Pass
-		{
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-		
-			
-			#include "UnityCG.cginc"
-
-
-			float4 _Color;
-			//通过一个结构体定义顶点着色器的输入
-			//(填充到这些语义中的数据来自于模型的Mesh Render组件，每帧调用DrawCall时，
-			//Mesh Render组件会将负责渲染的模型的数据发给Unity。)
-			struct a2v {
-				//使用POSITION语义，将模型空间的顶点坐标填充至vertex
-				float4 vertex:POSITION;
-				//使用NORMAL语义，将模型空间的顶点法线填充至normal（由于是矢量，这里使用float3）
-				float3 normal:NORMAL;
-				//使用TEXCOORD0语义，将模型的第一套纹理坐标填充texcoord变量
-				float4 texcoord:TEXCOORD0;
-			};  
-
-			//使用一个结构体定义片元着色器的输出
-			struct v2f {
-				//SV_POSITION语义告诉Unity，pos中包含模型顶点在裁剪空间的坐标
-				float4 pos:SV_POSITION;
-				//COLOR0语义告诉Unity,color用于存储颜色信息
-				fixed3 color : COLOR0;
-			};
-
-			//POSITION 将模型的顶点坐标填充到输入参数v中
-			//SV_POSITION 顶点着色器的输出是裁剪空间中顶点坐标
-			//方法的参数列表后无需SV_POSITION语义，
-			//因为此时输出的数据不仅仅只是模型裁剪空间的顶点坐标了。
-			v2f vert (a2v v)
-			{
-				v2f o;
-				o.pos= UnityObjectToClipPos(v.vertex);
-				//将法线方向映射到颜色中(法线矢量范围[-1,1],因此做一个映射计算)  
-				o.color = v.normal*0.5 + fixed3(0.5,0.5,0.5);
-				return o;
-			}
-			//SV_Target 将用户的输出颜色存储到一个渲染目标中，这里会输出到默认的帧缓存
-			fixed4 frag(v2f i) : SV_Target
-			{
-				//将计算后的颜色显示出来
-				fixed3 c= i.color;
-				//使用_Color属性控制颜色属性
-				c *= _Color.rgb;
-				return fixed4(c,1.0);
-			}
-			ENDCG
-		}
-	}
+Shader "Unlit/520" {
+    Properties {
+    }
+    SubShader {
+        Tags {
+            "RenderType"="Opaque"
+        }
+        LOD 100
+        Pass {
+            Name "FORWARD"
+            Tags {
+                "LightMode"="ForwardBase"
+            }
+            
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #define UNITY_PASS_FORWARDBASE
+            #include "UnityCG.cginc"
+            #pragma multi_compile_fwdbase_fullshadows
+            #pragma multi_compile_fog
+            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma target 3.0
+            struct VertexInput {
+                float4 vertex : POSITION;
+            };
+            struct VertexOutput {
+                float4 pos : SV_POSITION;
+                UNITY_FOG_COORDS(0)
+            };
+            VertexOutput vert (VertexInput v) {
+                VertexOutput o = (VertexOutput)0;
+                o.pos = UnityObjectToClipPos( v.vertex );
+                UNITY_TRANSFER_FOG(o,o.pos);
+                return o;
+            }
+            float4 frag(VertexOutput i) : COLOR {
+////// Lighting:
+                float3 finalColor = 0;
+                fixed4 finalRGBA = fixed4(finalColor,1);
+                UNITY_APPLY_FOG(i.fogCoord, finalRGBA);
+                return finalRGBA;
+            }
+            ENDCG
+        }
+    }
+    FallBack "Diffuse"
+    CustomEditor "ShaderForgeMaterialInspector"
 }
