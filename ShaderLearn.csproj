@@ -231,12 +231,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Learn\Test.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EditorLabel.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\SoftNormalsToVertexColor.cs" />
-    <Compile Include="Assets\ShaderLearn\Test.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Learn\1BaseLightShader\519.shader" />
+    <None Include="Assets\Learn\1BaseLightShader\520.1逐像素漫反射实现.shader" />
+    <None Include="Assets\Learn\1BaseLightShader\520.2逐顶点漫反射实现.shader" />
+    <None Include="Assets\Learn\1BaseLightShader\520.3半兰伯特漫反射实现.shader" />
+    <None Include="Assets\Learn\1BaseLightShader\520.4逐顶点高光.shader" />
+    <None Include="Assets\Learn\1BaseLightShader\520.5逐像素高光.shader" />
+    <None Include="Assets\Learn\1BaseLightShader\520.6Blinn-Phong逐像素.shader" />
+    <None Include="Assets\Learn\1BaseLightShader\520.shader" />
+    <None Include="Assets\Learn\2BaseTexture\BaseTexture.shader" />
+    <None Include="Assets\Learn\2BaseTexture\BaseTexture1.shader" />
+    <None Include="Assets\Learn\3AnimateShader\AniShader.shader" />
+    <None Include="Assets\Learn\3AnimateShader\AnimationShader.shader" />
+    <None Include="Assets\Learn\BlurShader\7.5.shader" />
+    <None Include="Assets\Learn\Gradient\Gradient.shader" />
+    <None Include="Assets\Learn\Gradient\HealthBar.shader" />
+    <None Include="Assets\Learn\Gradient\Wave.shader" />
+    <None Include="Assets\Learn\ShaderForge\425Shader.shader" />
     <None Include="Assets\ShaderForge\Editor\InternalResources\GPU Rendering\Common\ExtractChannel.shader" />
     <None Include="Assets\ShaderForge\Editor\InternalResources\GPU Rendering\Common\FillColor.shader" />
     <None Include="Assets\ShaderForge\Editor\InternalResources\GPU Rendering\Common\ReadPackedData.shader" />
@@ -431,23 +448,6 @@
     <None Include="Assets\ShaderForge\Example Assets\Shaders\VertexAnimation.shader" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\VertexColorRounding.shader" />
     <None Include="Assets\ShaderForge\Readme.txt" />
-    <None Include="Assets\ShaderLearn\1BaseLightShader\519.shader" />
-    <None Include="Assets\ShaderLearn\1BaseLightShader\520.1逐像素漫反射实现.shader" />
-    <None Include="Assets\ShaderLearn\1BaseLightShader\520.2逐顶点漫反射实现.shader" />
-    <None Include="Assets\ShaderLearn\1BaseLightShader\520.3半兰伯特漫反射实现.shader" />
-    <None Include="Assets\ShaderLearn\1BaseLightShader\520.4逐顶点高光.shader" />
-    <None Include="Assets\ShaderLearn\1BaseLightShader\520.5逐像素高光.shader" />
-    <None Include="Assets\ShaderLearn\1BaseLightShader\520.6Blinn-Phong逐像素.shader" />
-    <None Include="Assets\ShaderLearn\1BaseLightShader\520.shader" />
-    <None Include="Assets\ShaderLearn\2BaseTexture\BaseTexture.shader" />
-    <None Include="Assets\ShaderLearn\2BaseTexture\BaseTexture1.shader" />
-    <None Include="Assets\ShaderLearn\3AnimateShader\AniShader.shader" />
-    <None Include="Assets\ShaderLearn\3AnimateShader\AnimationShader.shader" />
-    <None Include="Assets\ShaderLearn\BlurShader\7.5.shader" />
-    <None Include="Assets\ShaderLearn\Gradient\Gradient.shader" />
-    <None Include="Assets\ShaderLearn\Gradient\HealthBar.shader" />
-    <None Include="Assets\ShaderLearn\Gradient\Wave.shader" />
-    <None Include="Assets\ShaderLearn\ShaderForge\425Shader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
