@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Healthbar
-  m_Shader: {fileID: 4800000, guid: 2ac62c36bbfa9ee438157983399174ee, type: 3}
+  m_Name: Shader Forge_BlurShader
+  m_Shader: {fileID: 4800000, guid: 2fdf7d4cb0ddfbf48837ef722eb248d2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -17,11 +17,16 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _Diffuse:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Cutoff: 0.65
-    - _Strength: 4
-    - _lerp_ctrl: 0.48
+    - _Gloss: 0.5
+    - _offset: 0
+    - _offsetX: 0.27
+    - _offsetgggg: 0.3122926
     m_Colors:
-    - _colorA: {r: 1, g: 0, b: 0, a: 1}
-    - _colorB: {r: 0, g: 1, b: 0.42068958, a: 1}
+    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}

@@ -288,10 +288,50 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\SoarDHierarchy.cs" />
     <Compile Include="Assets\ShaderForge\Editor\InternalResources\Inspectors\ShaderForgeInspector.cs" />
     <Compile Include="Assets\ShaderForge\Editor\InternalResources\Inspectors\ShaderForgeMaterialInspector.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\ALShader\AL.cginc" />
+    <None Include="Assets\ALShader\Custom\Transparent\Diffuse(RGB+A).shader" />
+    <None Include="Assets\ALShader\Custom\Transparent\Diffuse(RGB+A)_Lambert.shader" />
+    <None Include="Assets\ALShader\Custom\Transparent\Diffuse(RGB+A)_Lambert_ChangeColor.shader" />
+    <None Include="Assets\ALShader\Custom\Transparent\Diffuse.shader" />
+    <None Include="Assets\ALShader\Custom\Unlit\ColorTex(RGB+A).shader" />
+    <None Include="Assets\ALShader\Custom\VertexColorDiffuse.shader" />
+    <None Include="Assets\ALShader\Jee\ADD_always.shader" />
+    <None Include="Assets\ALShader\Jee\Alpha2TexCull.shader" />
+    <None Include="Assets\ALShader\Jee\Alpha_01.shader" />
+    <None Include="Assets\ALShader\Jee\Alpha_Blended.shader" />
+    <None Include="Assets\ALShader\Jee\Arrow_Trail.shader" />
+    <None Include="Assets\ALShader\Jee\City_BudingMap.shader" />
+    <None Include="Assets\ALShader\Jee\FireBall.shader" />
+    <None Include="Assets\ALShader\Jee\Loft_Move.shader" />
+    <None Include="Assets\ALShader\Jee\RoleBattleMaterial.shader" />
+    <None Include="Assets\ALShader\Jee\World_Water.shader" />
+    <None Include="Assets\ALShader\Jee\add.shader" />
+    <None Include="Assets\ALShader\Jee\common_LOFT(UV2).shader" />
+    <None Include="Assets\ALShader\Jee\common_Normal.shader" />
+    <None Include="Assets\ALShader\Jee\et_accact_Trail.shader" />
+    <None Include="Assets\ALShader\Jee\hero_anbu11.shader" />
+    <None Include="Assets\ALShader\Jee\hero_rongjie 1.shader" />
+    <None Include="Assets\ALShader\Jee\hero_rongjie.shader" />
+    <None Include="Assets\ALShader\Jee\other_wing.shader" />
+    <None Include="Assets\ALShader\Jee\world_foodFXwater.shader" />
+    <None Include="Assets\ALShader\Jee\world_silverSmoke.shader" />
+    <None Include="Assets\ALShader\SoarD\Transparent\SDCastleShadow(RGB+A).shader" />
+    <None Include="Assets\ALShader\SoarD\Transparent\SDCastleShadow.shader" />
+    <None Include="Assets\ALShader\Special\Illusion.shader" />
+    <None Include="Assets\ALShader\Terrain\MultiSameUVFade1.shader" />
+    <None Include="Assets\ALShader\Terrain\MultiSameUVFade2.shader" />
+    <None Include="Assets\ALShader\UI\UI-Default.shader" />
+    <None Include="Assets\ALShader\UI\UI-DefaultETC1.shader" />
+    <None Include="Assets\ALShader\Unity\Sprites-Default.shader" />
+    <None Include="Assets\ALShader\XTech\HeroShow.shader" />
+    <None Include="Assets\ALShader\_Fx\ImageOverLay.shader" />
+    <None Include="Assets\ALShader\_Fx\RapidBlurEffect.shader" />
+    <None Include="Assets\ALShader\effect\Alpha_01.shader" />
     <None Include="Assets\Learn\1BaseLightShader\519.shader" />
     <None Include="Assets\Learn\1BaseLightShader\520.1逐像素漫反射实现.shader" />
     <None Include="Assets\Learn\1BaseLightShader\520.2逐顶点漫反射实现.shader" />
@@ -305,6 +345,8 @@
     <None Include="Assets\Learn\3AnimateShader\AniShader.shader" />
     <None Include="Assets\Learn\3AnimateShader\AnimationShader.shader" />
     <None Include="Assets\Learn\BlurShader\7.5.shader" />
+    <None Include="Assets\Learn\BlurShader\BlurShader.shader" />
+    <None Include="Assets\Learn\Gradient\Dissolve.shader" />
     <None Include="Assets\Learn\Gradient\Gradient.shader" />
     <None Include="Assets\Learn\Gradient\HealthBar.shader" />
     <None Include="Assets\Learn\Gradient\Wave.shader" />

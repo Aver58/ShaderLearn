@@ -8,7 +8,6 @@ Shader "Hidden/Wave" {
         _colorA ("colorA", Color) = (1,0,0,1)
         _colorB ("colorB", Color) = (0,1,0,1)
         _lerp_ctrl ("lerp_ctrl", Range(0, 1)) = 1
-        [HideInInspector]_Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
     }
     SubShader {
         Tags {
