@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Shader Forge_BlurShader
-  m_Shader: {fileID: 4800000, guid: 2fdf7d4cb0ddfbf48837ef722eb248d2, type: 3}
+  m_Name: Red
+  m_Shader: {fileID: 4800000, guid: 55e1ca8ba21fec448baf7cedd9f4c79e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -18,15 +18,13 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Diffuse:
+    - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Gloss: 0.5
-    - _offset: 0
-    - _offsetX: 1
-    - _offsetgggg: 0.3122926
+    - _Shininess: 0.7
     m_Colors:
-    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}

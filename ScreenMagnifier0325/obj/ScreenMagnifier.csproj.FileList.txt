@@ -1,0 +1,16 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\ScreenMagnifier.FrmMain.resources
+obj\Debug\ScreenMagnifier.Properties.Resources.resources
+obj\Debug\ScreenMagnifier.csproj.GenerateResource.Cache
+bin\Debug\ScreenMagnifier.exe
+bin\Debug\ScreenMagnifier.pdb
+obj\Debug\ScreenMagnifier.exe
+obj\Debug\ScreenMagnifier.pdb
+bin\Release\ScreenMagnifier.exe
+bin\Release\ScreenMagnifier.pdb
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\ScreenMagnifier.FrmMain.resources
+obj\Release\ScreenMagnifier.Properties.Resources.resources
+obj\Release\ScreenMagnifier.csproj.GenerateResource.Cache
+obj\Release\ScreenMagnifier.exe
+obj\Release\ScreenMagnifier.pdb

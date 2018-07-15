@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Shader Forge_BlurShader
-  m_Shader: {fileID: 4800000, guid: 2fdf7d4cb0ddfbf48837ef722eb248d2, type: 3}
+  m_Name: "uv\u6270\u52A8\u6548\u679C\u4E4B\u6C34\u6EF4"
+  m_Shader: {fileID: 4800000, guid: 3725e2554a327ac41ba68ac8c8b5dae7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -18,15 +18,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Diffuse:
-        m_Texture: {fileID: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: a4ae85da804f44f89abcaa91866d90c1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Gloss: 0.5
-    - _offset: 0
-    - _offsetX: 1
-    - _offsetgggg: 0.3122926
-    m_Colors:
-    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RA: 1
+    - _Scale: 10
+    - _Speed: 5
+    - _UA: 0.5
+    - _UB: 0.5
+    m_Colors: []
