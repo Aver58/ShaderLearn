@@ -38,6 +38,10 @@
                 c.rgb = i.worldNormal*0.5+0.5;
                 return c;
             }
+			//fixed4 frag(float4 sp : VPOS) : SV_Target {
+			//	//用屏幕坐标除以屏幕分辨率_ScreenParams.xy，得到视口空间中的坐标
+			//	return fixed4(sp.xy/_ScreenParams.xy, 0.0, 1.0);
+			//}
             ENDCG
         }
     }
