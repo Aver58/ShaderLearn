@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.DataStruct
 {
@@ -20,32 +21,43 @@ namespace Assets.DataStruct
     class SequenceList<T> : IListDS<T>
     {
         private int MaxSize{
-            get { return items.Length; }
-            set { m_maxSize = value; }
+            get { return m_Items.Length; }
+            set { m_Size = value; }
         }
-        private int LastPointer;
-        private int m_maxSize;
-        private T[] items;
+        private int m_LastPointer;
+        private int m_Size;
+        private T[] m_Items;
 
         //构造
         public SequenceList(int size)
         {
-            m_maxSize = size;
-            items = new T[size];
+            m_Size = size;
+            m_Items = new T[size];
             //初始值设为-1，此时数组中元素个数为0
-            LastPointer = -1;
+            m_LastPointer = -1;
         }
 
         public int GetLength()
         {
             //不能返回tItems的长度
             //return MaxSize;
-            return LastPointer + 1;
+            return m_LastPointer + 1;
         }
 
         public void Insert(T item, int i)
         {
-            throw new NotImplementedException();
+            if (m_Size <= i)
+            {
+                Debug.LogError("Stack Overfolw!");
+            }
+            else if(m_LastPointer < i)
+            {
+                Debug.LogError("Out Of Index!");
+            }
+            else
+            {
+
+            }
         }
 
         public void Add(T item)
