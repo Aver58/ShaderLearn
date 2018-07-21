@@ -72,7 +72,7 @@ namespace DataStructure
             var tempNode = m_HeadNode;
             if (m_HeadNode.next == null)
             {
-                Console.WriteLine("Current List Is Null!");
+                Console.WriteLine("Current List Is Empty!");
                 return;
             }
             while (tempNode != null)
@@ -242,33 +242,33 @@ namespace DataStructure
         }
     }
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            ChainList<int> list = new ChainList<int>(new int[] {1,2,3},false);
-            //list.Add(2);
-            //list.Add(3);
-            //list.Add(4);
-            //list.Add(5);
-            //list.Delete(2);
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        ChainList<int> list = new ChainList<int>(new int[] {1,2,3},false);
+    //        //list.Add(2);
+    //        //list.Add(3);
+    //        //list.Add(4);
+    //        //list.Add(5);
+    //        //list.Delete(2);
 
-            //Console.WriteLine(list.Find(1).data);
-            //Console.WriteLine(list.Index(4));
+    //        //Console.WriteLine(list.Find(1).data);
+    //        //Console.WriteLine(list.Index(4));
 
-            //list.Insert(10,2);
-            //list.Insert(100, 0);
+    //        //list.Insert(10,2);
+    //        //list.Insert(100, 0);
 
-            //list.InsertTop(10);
-            list.Reverse();
-            list.PrintNodes();
+    //        //list.InsertTop(10);
+    //        list.Reverse();
+    //        list.PrintNodes();
 
-            Console.WriteLine(list.GetLength());
-            Console.WriteLine(list.IsEmpty());
+    //        Console.WriteLine(list.GetLength());
+    //        Console.WriteLine(list.IsEmpty());
 
-            //Console.Clear();
+    //        //Console.Clear();
 
-            Console.ReadLine();
-        }
-    }
+    //        Console.ReadLine();
+    //    }
+    //}
 }
