@@ -8,7 +8,8 @@ namespace DataStructure
         int GetLength();
         bool IsEmpty();
         void Clear();
-        int Index(T item);
+        Node<T> Find(int i);
+        int Index(T node);
         void Add(T item);
         void Delete(int i);
         void Insert(T item, int i);
@@ -29,43 +30,46 @@ namespace DataStructure
         }
     }
 
-    //struct Nodes<T>
-    //{
-    //    T data;
-    //    Nodes<T> next;
-    //}
 
     /// <summary>
     /// 线性表的链式实现    -- 2018/7/20
     /// 单链表
     /// </summary>
-    class ChainList<T> : IChainList<T>, IEnumerable
+    class ChainList<T> : IChainList<T>
     {
         private Node<T> m_HeadNode;
-        private Node<T>[] m_Items;
-        private int m_LastPointer = -1;
-        private int m_Size;
+        private int m_Size = 0;
 
-        public ChainList()
-        {
-            m_HeadNode = new Node<T>();
-            m_HeadNode.next = null;
-            m_LastPointer = -1;
-        }
-        public ChainList(T data)
+        public ChainList(T node)
         {
             //创建头结点
-            m_HeadNode = new Node<T>();
+            m_HeadNode = new Node<T>(node);
             m_HeadNode.next = null;
-            m_HeadNode.data = data;
-            m_LastPointer = 0;
-            m_Items[m_LastPointer] = m_HeadNode;
+            m_Size++;
+        }
+
+        public ChainList(T[] data,bool isInsertTop)
+        {
+            if (isInsertTop)
+            {
+                for (int i = 0; i < data.Length; i++)
+                {
+                    InsertTop(data[i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < data.Length; i++)
+                {
+                    Add(data[i]);
+                }
+            }
         }
 
         //输出线性表
-        public void PrintNodes<T>()
+        public void PrintNodes()
         {
-            var tempNode = m_HeadNode.next;
+            var tempNode = m_HeadNode;
             if (m_HeadNode.next == null)
             {
                 Console.WriteLine("Current List Is Null!");
@@ -79,25 +83,9 @@ namespace DataStructure
             Console.WriteLine();
         }
 
-        public IEnumerator GetEnumerator()
-        {
-            foreach (var val in m_Items)
-            {
-                yield return val;
-            }
-        }
-
         public int GetLength()
         {
-            int len = 0;
-            var tempNode = m_HeadNode.next;
-
-            //时间性能为 O(n)。
-            while (tempNode != null)
-            {
-                len++;
-            }
-            return len;
+            return m_Size;
         }
 
         public bool IsEmpty()
@@ -114,80 +102,173 @@ namespace DataStructure
         {
             m_HeadNode = new Node<T>();
             m_HeadNode.next = null;
-            for (int i = 0; i < m_LastPointer; i++)
-            {
-                m_Items[i] = null;
-            }
         }
 
-        public void Add(T item)
+        public void Add(T node)
         {
-            throw new NotImplementedException();
+            var temp = m_HeadNode;
+            if (temp == null)
+            {
+                m_HeadNode = new Node<T>(node);
+                m_HeadNode.next = null;
+                m_Size++;
+                return;
+            }
+            for (int i = 0; i < m_Size - 1; i++)
+            {
+                temp = temp.next;
+            }
+            var newNode = new Node<T>(node);
+            newNode.next = null;
+            temp.next = newNode;
+            m_Size++;
         }
 
         public void Delete(int i)
         {
-            throw new NotImplementedException();
+            if (i>m_Size||i<0)
+            {
+                Console.WriteLine("Out Of Index! m_Size is {0}", m_Size);
+                return;
+            }
+            if (i==0)
+            {
+                //删除头结点
+                m_HeadNode = m_HeadNode.next;
+                m_Size--;
+                return;
+            }
+            //找到第i-1个结点
+            var temp = m_HeadNode;
+            for (int j = 0; j < i - 1; j++)
+            {
+                temp = temp.next;
+            }
+            var preNode = temp;
+            var target = temp.next;
+            preNode.next = target.next;
+            target = null;
+            m_Size--;
         }
 
-        public void Insert(T item, int i)
+        public void Insert(T node, int i)
         {
-            throw new NotImplementedException();
+            if (i > m_Size || i < 0)
+            {
+                Console.WriteLine("Out Of Index! m_Size is {0}", m_Size);
+                return;
+            }
+            var temp = m_HeadNode;
+            for (int j = 0; j < i - 1; j++)
+            {
+                temp = temp.next;
+            }
+            var preNode = temp;
+            var target = temp.next;
+            //申请新节点
+            Node<T> newNode = new Node<T>(node);
+            //先牵右手再牵左手
+            newNode.next = target;
+            preNode.next = newNode;
+            m_Size++;
         }
 
-        public void InsertTop<T>(Node<T> node)
+        public void InsertTop(T node)
         {
-
+            var temp = m_HeadNode;
+            var newHead = new Node<T>(node);
+            newHead.next = temp;
+            m_HeadNode = newHead;
+            m_Size++;
+        }
+        
+        public Node<T> Find(int i)
+        {
+            Node<T> temp = m_HeadNode;
+            if (i>m_Size||i<0)
+            {
+                Console.WriteLine("Out Of Index! m_Size is {0}", m_Size);
+                return null;
+            }
+            for (int j = 0; j < i; j++)
+            {
+                temp = temp.next;
+            }
+            return temp;
         }
 
-        public void InsertBottom<T>(Node<T> node)
+        public int Index(T node)
         {
-
-        }
-
-        public int Find(int i)
-        {
-
+            var temp = m_HeadNode;
+            for (int i = 0; i < m_Size; i++)
+            {
+                if (temp.data.Equals(node))
+                {
+                    return i;
+                }
+                temp = temp.next;
+            }
+            Console.WriteLine("Without this item");
+            return -1;
         }
 
         public void Reverse()
         {
-            throw new NotImplementedException();
+            //m_HeadNode.next = null;
+            //var temp = m_HeadNode;
+            //for (int i = 0; i < m_Size/2; i++)
+            //{
+            //    var nextNode = temp.next;
+            //    if (nextNode == null)
+            //    {
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        var target = nextNode.next;
+            //        if (target == null)
+            //        {
+            //            nextNode.next = temp;
+            //            temp = nextNode;
+            //        }
+            //        else
+            //        {
+            //            nextNode.next = temp;
+            //            temp = target;
+            //        }
+            //    }
+            //}
+            //m_HeadNode = temp;
         }
-
-
-
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-            //SequenceList<int> list = new SequenceList<int>(10);
-            //list.Add(1);
+            ChainList<int> list = new ChainList<int>(new int[] {1,2,3},false);
             //list.Add(2);
-            //foreach (var item in list)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            //list.Add(3);
+            //list.Add(4);
+            //list.Add(5);
+            //list.Delete(2);
 
-            //Console.WriteLine(list.GetLength());
-            //Console.WriteLine(list.IsFull());
-            //Console.WriteLine(list.IsEmpty());
-            //Console.WriteLine(list[1]);
+            //Console.WriteLine(list.Find(1).data);
+            //Console.WriteLine(list.Index(4));
+
+            //list.Insert(10,2);
+            //list.Insert(100, 0);
+
+            //list.InsertTop(10);
+            list.Reverse();
+            list.PrintNodes();
+
+            Console.WriteLine(list.GetLength());
+            Console.WriteLine(list.IsEmpty());
 
             //Console.Clear();
 
-            //list.Insert(100, 0);
-            //list.Insert(22, 1);
-
-            //list.Delete(0);
-            //Console.WriteLine(list.GetLength());
-            //foreach (var item in list)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            //Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

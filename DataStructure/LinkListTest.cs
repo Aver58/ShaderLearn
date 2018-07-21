@@ -27,8 +27,7 @@ namespace DataStructure
             public T data; //数据域
             public Node<T> next; //指针域
 
-            public Node()
-            { }
+            public Node()   { }
 
             public Node(T value)
             {

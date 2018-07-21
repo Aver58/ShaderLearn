@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaderLearn", "ShaderLearn.csproj", "{61F67C70-F491-EE5A-0AE3-E64073B4F853}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaderLearn.Editor", "ShaderLearn.Editor.csproj", "{971EE9F7-D6CF-93AB-8AA1-1797AD6135D2}"
@@ -8,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenMagnifier", "ScreenMagnifier0325\ScreenMagnifier.csproj", "{B34F8794-4C7B-40D1-AA52-106AEEAD2783}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessMonitor", "..\ProcessMonitor\ProcessMonitor.csproj", "{44A420E0-E195-4D3D-ADB8-03038BA197D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructure", "DataStructure\DataStructure.csproj", "{88ED1EFF-7E84-494E-B277-4159FD494259}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,8 +35,15 @@ Global
 		{44A420E0-E195-4D3D-ADB8-03038BA197D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44A420E0-E195-4D3D-ADB8-03038BA197D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44A420E0-E195-4D3D-ADB8-03038BA197D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88ED1EFF-7E84-494E-B277-4159FD494259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88ED1EFF-7E84-494E-B277-4159FD494259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88ED1EFF-7E84-494E-B277-4159FD494259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88ED1EFF-7E84-494E-B277-4159FD494259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1C3BFC2-79F0-4911-972F-B0355AC80ABB}
 	EndGlobalSection
 EndGlobal
