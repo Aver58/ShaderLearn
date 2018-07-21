@@ -179,7 +179,55 @@ namespace DataStructure
             }
          
         }
-    
+
+        int GetPriority(char str)
+        {
+            switch (str)
+            {
+                case '(':
+                    return -1;
+                case '*':
+                    return 0;
+                case '/':
+                    return 0;
+                case '+':
+                    return 1;
+                case '-':
+                    return 1;
+                default:
+                    return 999;
+            }
+        }
+        /// <summary>
+        /// 中缀表达式如何转换为后缀表达式
+        /// 输入1+2*(3+4)
+        /// 输出12+34+*
+        ///  2*(9+6/3-5)+4
+        ///  2963/+5-*4+
+        /// </summary>
+        public void InfixToSuffix(string expression)
+        {
+            StackList<string> stack = new StackList<string>(100);
+            var chars = expression.ToCharArray();
+            foreach (var str in chars)
+            {
+                var priority = GetPriority(str);
+                switch (priority)
+                {
+                    case -1:
+                        stack.Push(str.ToString());
+                        break;
+                    case 0:
+                        stack.Push(str.ToString());
+                        break;
+                    case 1:
+                        stack.Push(str.ToString());
+                        break;
+                        //default:
+                }
+            }
+           
+        }
     }
     class Program
     {
