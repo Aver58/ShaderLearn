@@ -179,12 +179,14 @@ namespace DataStructure
             }
          
         }
-
+        //这是我自己写的一个简单的中缀表达式求值程序，简单到只能计算10以内的数，支持+-*/() 运算符。
         int GetPriority(char str)
         {
             switch (str)
             {
                 case '(':
+                    return -2;
+                case ')':
                     return -1;
                 case '*':
                     return 0;
@@ -201,7 +203,7 @@ namespace DataStructure
         /// <summary>
         /// 中缀表达式如何转换为后缀表达式
         /// 输入1+2*(3+4)
-        /// 输出12+34+*
+        /// 输出1234+*+
         ///  2*(9+6/3-5)+4
         ///  2963/+5-*4+
         /// </summary>
@@ -209,23 +211,23 @@ namespace DataStructure
         {
             StackList<string> stack = new StackList<string>(100);
             var chars = expression.ToCharArray();
-            foreach (var str in chars)
-            {
-                var priority = GetPriority(str);
-                switch (priority)
-                {
-                    case -1:
-                        stack.Push(str.ToString());
-                        break;
-                    case 0:
-                        stack.Push(str.ToString());
-                        break;
-                    case 1:
-                        stack.Push(str.ToString());
-                        break;
-                        //default:
-                }
-            }
+            //foreach (var str in chars)
+            //{
+            //    var priority = GetPriority(str);
+            //    switch (priority)
+            //    {
+            //        case -1:
+            //            stack.Push(str.ToString());
+            //            break;
+            //        case 0:
+            //            stack.Push(str.ToString());
+            //            break;
+            //        case 1:
+            //            stack.Push(str.ToString());
+            //            break;
+            //            //default:
+            //    }
+            //}
            
         }
     }
