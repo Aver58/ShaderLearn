@@ -45,7 +45,9 @@
     <Compile Include="ChainList.cs" />
     <Compile Include="InfixToSuffix.cs" />
     <Compile Include="LinkListTest.cs" />
+    <Compile Include="Ploynomial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueueList.cs" />
     <Compile Include="SequenceList.cs" />
     <Compile Include="StackList.cs" />
   </ItemGroup>

@@ -106,7 +106,17 @@ namespace DataStructure
 
         public void Reverse()
         {
-            throw new NotImplementedException();
+            if (IsEmpty())
+            {
+                Console.WriteLine("This list is empty!");
+                return;
+            }
+            for (int i = 0; i < m_Items.Length/2; i++)
+            {
+                var temp = m_Items[m_rear];
+                m_Items[m_rear] = m_Items[m_front];
+                m_Items[m_front] = temp;
+            }
         }
     }
 }
