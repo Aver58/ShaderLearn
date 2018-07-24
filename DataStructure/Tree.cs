@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,25 +31,73 @@ namespace DataStructure
             ,… , nk
             , ni是 ni+1的父结
             点。路径所包含边的个数为路径的长度。
-            9. 祖先结点(Ancestor)：沿树根到某一结点路
+        9. 祖先结点(Ancestor)：沿树根到某一结点路
             径上的所有结点都是这个结点的祖先结点。
-            10. 子孙结点(Descendant)：某一结点的子树
+        10. 子孙结点(Descendant)：某一结点的子树
             中的所有结点是这个结点的子孙。
-            11. 结点的层次（Level）：规定根结点在1层，
+        11. 结点的层次（Level）：规定根结点在1层，
             其它任一结点的层数是其父结点的层数加1。
-            12. 树的深度（Depth）：树中所有结点中的最
+        12. 树的深度（Depth）：树中所有结点中的最
             大层次是这棵树的深度
      */
-    //3.树的表现
+    // 3.1树的表现
     //①儿子-兄弟表示
     public class Son_SiblingNode
     {
         // 二叉树
         Son_SiblingNode First_Child;
         Son_SiblingNode Next_Sibling;
+    }
 
+
+    // 3.2二叉树的存储结构
+    //      1. 顺序存储
+    //①完全二叉树：按从上至下、从左到右顺序存储
+    //①一般二叉树：但会造成空间浪费
+    //      2. 链式存储
+
+    public class TreeNode
+    {
+        public int data;
+        public TreeNode left;
+        public TreeNode right;
+        public void DisplayData()
+        {
+            Console.Write(data + " ");
+        }
     }
     class Tree
     {
+
+        // 3.3 二叉树的遍历
+        //以ABCDEFGHI为例子
+        // (1)先序遍历:
+        // ①先访问根节点
+        // ②先序遍历左子树
+        // ③先序遍历右子树
+
+        // 先序遍历递归版
+        public void PreOrder(TreeNode tree)
+        {
+            if (tree == null)
+            {
+                return;
+            }
+            PreOrder(tree.left);
+            PreOrder(tree.right);
+        }
+        // 先序遍历递归版
+        public void PreOrderEasy(TreeNode tree)
+        {
+            if (tree == null)
+            {
+                return;
+            }
+            PreOrder(tree.left);
+            PreOrder(tree.right);
+        }
+        // (2)中序遍历
+        // (3)后序遍历
+
     }
 }
