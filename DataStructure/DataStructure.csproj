@@ -50,6 +50,7 @@
     <Compile Include="QueueList.cs" />
     <Compile Include="SequenceList.cs" />
     <Compile Include="StackList.cs" />
+    <Compile Include="Tree.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

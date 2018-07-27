@@ -231,36 +231,36 @@ namespace DataStructure
            
         }
     }
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            StackList<int> list = new StackList<int>(10);
-            list.Push(1);
-            list.Push(2);
-            list.Pop();
-            foreach (var item in list)
-            {
-                Console.WriteLine(item);
-            }
+    //class Program
+    //{
+    //    static void Main(string[] args)
+    //    {
+    //        StackList<int> list = new StackList<int>(10);
+    //        list.Push(1);
+    //        list.Push(2);
+    //        list.Pop();
+    //        foreach (var item in list)
+    //        {
+    //            Console.WriteLine(item);
+    //        }
 
-            Console.WriteLine("Length:{0}",list.GetLength());
-            Console.WriteLine("IsFull:{0}", list.IsFull());
-            Console.WriteLine("IsEmpty:{0}", list.IsEmpty());
-            //Console.WriteLine(list[1]);
+    //        Console.WriteLine("Length:{0}",list.GetLength());
+    //        Console.WriteLine("IsFull:{0}", list.IsFull());
+    //        Console.WriteLine("IsEmpty:{0}", list.IsEmpty());
+    //        //Console.WriteLine(list[1]);
 
-            //Console.Clear();
+    //        //Console.Clear();
 
-            //list.Insert(100, 0);
-            //list.Insert(22, 1);
+    //        //list.Insert(100, 0);
+    //        //list.Insert(22, 1);
 
-            //list.Delete(0);
-            //Console.WriteLine(list.GetLength());
-            //foreach (var item in list)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            Console.ReadLine();
-        }
-    }
+    //        //list.Delete(0);
+    //        //Console.WriteLine(list.GetLength());
+    //        //foreach (var item in list)
+    //        //{
+    //        //    Console.WriteLine(item);
+    //        //}
+    //        Console.ReadLine();
+    //    }
+    //}
 }

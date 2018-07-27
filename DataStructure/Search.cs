@@ -10,7 +10,8 @@ namespace DataStructure
     {
         //一. 顺序查找
         //二.二分查找（前提：顺序排放，list）
-        public int BinarySearch(T[] table ,T item)
+
+        public int BinarySearch(int[] table , int item)
         {
             int left = 1;
             int right = table.Length;
