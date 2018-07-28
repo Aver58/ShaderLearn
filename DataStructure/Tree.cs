@@ -65,6 +65,7 @@ namespace DataStructure
         public int data;
         public TreeNode left;
         public TreeNode right;
+        public TreeNode parent;
 
         public TreeNode(){}
 
@@ -103,9 +104,200 @@ namespace DataStructure
             m_HeadNode = new TreeNode(data);
             m_HeadNode.left = null;
             m_HeadNode.right = null;
+            m_HeadNode.parent = null;
             m_Size++;
         }
 
+        public int GetLength()
+        {
+            return m_Size;
+        }
+
+        //求树的高度
+        public int GetHeight()
+        {
+            int HeightL = 0, HeightR = 0;
+            TreeNode tempNode = new TreeNode();
+            tempNode = m_HeadNode;
+            while (tempNode != null)
+            {
+                tempNode = tempNode.left;
+                HeightL += 1;
+            }
+            tempNode = m_HeadNode;
+            if (tempNode!=null)
+            {
+                tempNode = tempNode.left;
+                HeightR += 1;
+            }
+            return Math.Max(HeightL, HeightR);
+        }
+
+        public bool IsEmpty()
+        {
+            return m_HeadNode == null;
+        }
+
+        public void Clear()
+        {
+            m_HeadNode = new TreeNode();
+            m_HeadNode.left = null;
+            m_HeadNode.right = null;
+            m_HeadNode.parent= null;
+            m_Size = 0;
+        }
+
+        public TreeNode FindMax(TreeNode tree)
+        {
+            TreeNode tempNode = new TreeNode();
+            tempNode = tree;
+            while (tempNode != null)
+            {
+                tempNode = tempNode.right;
+            }
+            return tempNode;
+        }
+
+        public TreeNode FindMin(TreeNode tree)
+        {
+            TreeNode tempNode = new TreeNode();
+            tempNode = tree;
+            while (tempNode != null)
+            {
+                tempNode = tempNode.left;
+            }
+            return tempNode;
+        }
+
+        public TreeNode Find(int i)
+        {
+            TreeNode tempNode = new TreeNode();
+            tempNode = m_HeadNode;
+            while (tempNode!=null)
+            {
+                if (i < tempNode.data)
+                {
+                    tempNode = tempNode.left;
+                }
+                else if (i > tempNode.data)
+                {
+                    tempNode = tempNode.right;
+                }
+                else
+                {
+                    return tempNode;
+                }
+            }
+            return null;
+        }
+
+        // 二叉树的删除是最麻烦的，需要考虑四种情况：
+        //      被删节点是叶子节点
+        //      被删节点有左孩子没右孩子
+        //      被删节点有右孩子没左孩子
+        //      被删节点有两个孩子
+        public void Delete(int i)
+        {
+            TreeNode tempNode = Find(i);
+            //If the value doesn't exist
+            if (tempNode.data != i)
+            {
+                return;
+            }
+
+            if (tempNode == m_HeadNode)
+            {
+                m_HeadNode = null;
+            }
+
+            //No Children
+            if (tempNode.left == null && tempNode.right == null)
+            {
+                if (tempNode.parent.data < tempNode.data)
+                {
+                    tempNode.parent.right = null;
+                }
+                else
+                {
+                    // 完全二叉树不存在相等的情况？
+                    tempNode.parent.left = null;
+                }
+            }
+
+            //Two Children
+            else if (tempNode.left != null && tempNode.right != null)
+            {
+
+            }
+
+            //One Children
+            else
+            {
+                //If it has a right child
+                if (tempNode.right != null)
+                {
+                    //if it is the left node
+                    if (tempNode.data < tempNode.parent.data)
+                    {
+                        tempNode.parent.left = tempNode.right;
+                    }
+                    else
+                    {
+                        tempNode.parent.right = tempNode.right;
+                    }
+                }
+                //If it has a left child
+                else
+                {
+                    if (tempNode.data < tempNode.parent.data)
+                    {
+                        tempNode.parent.left = tempNode.right;
+                    }
+                    else
+                    {
+                        tempNode.parent.right = tempNode.right;
+                    }
+                }
+            }
+        }
+
+        public void Insert(int item)
+        {
+            TreeNode newNode = new TreeNode(item);
+            if (m_HeadNode == null)
+            {
+                m_HeadNode = newNode;
+                return;
+            }
+            TreeNode tempNode = m_HeadNode;
+            while (tempNode!=null)
+            {
+                if (newNode.data < tempNode.data)
+                {
+                    tempNode = tempNode.left;
+                    if (tempNode==null)
+                    {
+                        tempNode.left = newNode;
+                        break;
+                    }
+                }
+                else
+                {
+                    tempNode = tempNode.right;
+                    if (tempNode == null)
+                    {
+                        tempNode.right = newNode;
+                        break;
+                    }
+                }
+            }
+           
+        }
+
+        public void Reverse()
+        {
+            throw new NotImplementedException();
+        }
         // 3.3 二叉树的遍历
 
         //以ABCDEFGHI为例子
@@ -159,8 +351,25 @@ namespace DataStructure
             {
                 return;
             }
-            Queue<int> queue = new Queue<int>();
-            queue.Enqueue(tree.data);
+            //根节点开始入队
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(m_HeadNode);
+
+            TreeNode tempNode;
+            while (queue != null)
+            {
+                // 结点出队
+                tempNode = queue.Dequeue();
+
+                if (tempNode.left != null)
+                {
+                    queue.Enqueue(tempNode.left);
+                }
+                if (tempNode.right != null)
+                {
+                    queue.Enqueue(tempNode.right);
+                }
+            }
         }
         // 先序遍历非递归版
         //public void PreOrderEasy(TreeNode tree)
@@ -186,147 +395,6 @@ namespace DataStructure
         //        }
         //    }
         //}
-
-        public int GetLength()
-        {
-            return m_Size;
-        }
-
-        //求树的高度
-        public int GetHeight()
-        {
-            int HeightL = 0, HeightR = 0, MaxHeight = 0;
-            TreeNode tempNode = new TreeNode();
-            tempNode = m_HeadNode;
-            while (tempNode != null)
-            {
-                tempNode = tempNode.left;
-                HeightL += 1;
-            }
-            tempNode = m_HeadNode;
-            if (tempNode!=null)
-            {
-                tempNode = tempNode.left;
-                HeightR += 1;
-            }
-            return Math.Max(HeightL, HeightR);
-        }
-
-        public bool IsEmpty()
-        {
-            return m_Size == 0;
-        }
-
-        public void Clear()
-        {
-            m_HeadNode = new TreeNode();
-            m_HeadNode.left = null;
-            m_HeadNode.right = null;
-            m_Size = 0;
-        }
-
-        public TreeNode FindMax()
-        {
-            TreeNode tempNode = new TreeNode();
-            tempNode = m_HeadNode;
-            while (tempNode != null)
-            {
-                tempNode = tempNode.right;
-            }
-            return tempNode;
-        }
-
-        public TreeNode FindMin()
-        {
-            TreeNode tempNode = new TreeNode();
-            tempNode = m_HeadNode;
-            while (tempNode != null)
-            {
-                tempNode = tempNode.left;
-            }
-            return tempNode;
-        }
-
-        public TreeNode Find(int i)
-        {
-            TreeNode tempNode = new TreeNode();
-            tempNode = m_HeadNode;
-            while (tempNode!=null)
-            {
-                if (i < tempNode.data)
-                {
-                    tempNode = tempNode.left;
-                }
-                else if (i > tempNode.data)
-                {
-                    tempNode = tempNode.right;
-                }
-                else
-                {
-                    return tempNode;
-                }
-            }
-            return null;
-        }
-
-        public int Index(T node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Add(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        // 二叉树的删除是最麻烦的，需要考虑四种情况：
-        // 被删节点是叶子节点
-        // 被删节点有左孩子没右孩子
-        // 被删节点有右孩子没左孩子
-        // 被删节点有两个孩子
-        public void Delete(int i)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(int item)
-        {
-            TreeNode newNode = new TreeNode(item);
-            if (m_HeadNode == null)
-            {
-                m_HeadNode = newNode;
-                return;
-            }
-            TreeNode tempNode = m_HeadNode;
-            while (tempNode!=null)
-            {
-                if (newNode.data < tempNode.data)
-                {
-                    tempNode = tempNode.left;
-                    if (tempNode==null)
-                    {
-                        tempNode.left = newNode;
-                        break;
-                    }
-                }
-                else
-                {
-                    tempNode = tempNode.right;
-                    if (tempNode == null)
-                    {
-                        tempNode.right = newNode;
-                        break;
-                    }
-                }
-            }
-           
-        }
-
-        public void Reverse()
-        {
-            throw new NotImplementedException();
-        }
-
 
     }
     class Program
