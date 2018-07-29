@@ -7,104 +7,113 @@ using System.Threading.Tasks;
 
 namespace DataStructure
 {
+    #region 3.0 基础知识
     /*
-            1. 判定树上每个结点需要的查找次数刚好为该结点所在的层数; 
-            2. 查找成功时查找次数不会超过判定树的深度
-            3. n个结点的判定树的深度为[log2n]+1.
+    * 树的一些基本术语
 
-            4. 子树是不相交的；
-          5. 除了根结点外，每个结点有且仅有一个父结点；
-          6. 一棵N个结点的树有N-1条边。
+         1. 结点的度（Degree）：结点的子树个数
+         2. 树的度：树的所有结点中最大的度数
+         3. 叶结点（Leaf）：度为0的结点
+         4. 父结点（Parent）：有子树的结点是其子树
+             的根结点的父结点
+         5. 子结点（Child）：若A结点是B结点的父结
+             点，则称B结点是A结点的子结点；子结点也
+             称孩子结点。
+         6. 兄弟结点（Sibling）：具有同一父结点的各
+             结点彼此是兄弟结点。         7. 路径和路径长度：从结点n1到nk的路径为一
+             个结点序列n1 , n2
+             ,… , nk
+             , ni是 ni+1的父结
+             点。路径所包含边的个数为路径的长度。
+         9. 祖先结点(Ancestor)：沿树根到某一结点路
+             径上的所有结点都是这个结点的祖先结点。
+         10. 子孙结点(Descendant)：某一结点的子树
+             中的所有结点是这个结点的子孙。
+         11. 结点的层次（Level）：规定根结点在1层，
+             其它任一结点的层数是其父结点的层数加1。
+         12. 树的深度（Depth）：树中所有结点中的最
+             大层次是这棵树的深度
      */
 
-
-
     /*
-      树的一些基本术语
-          1. 结点的度（Degree）：结点的子树个数
-          2. 树的度：树的所有结点中最大的度数
-          3. 叶结点（Leaf）：度为0的结点
-          4. 父结点（Parent）：有子树的结点是其子树
-              的根结点的父结点
-          5. 子结点（Child）：若A结点是B结点的父结
-              点，则称B结点是A结点的子结点；子结点也
-              称孩子结点。
-          6. 兄弟结点（Sibling）：具有同一父结点的各
-              结点彼此是兄弟结点。        7. 路径和路径长度：从结点n1到nk的路径为一
-              个结点序列n1 , n2
-              ,… , nk
-              , ni是 ni+1的父结
-              点。路径所包含边的个数为路径的长度。
-          9. 祖先结点(Ancestor)：沿树根到某一结点路
-              径上的所有结点都是这个结点的祖先结点。
-          10. 子孙结点(Descendant)：某一结点的子树
-              中的所有结点是这个结点的子孙。
-          11. 结点的层次（Level）：规定根结点在1层，
-              其它任一结点的层数是其父结点的层数加1。
-          12. 树的深度（Depth）：树中所有结点中的最
-              大层次是这棵树的深度
-       */
-    // 3.1树的表现
-        //①儿子-兄弟表示
+     * 小技巧
+         1. 判定树上每个结点需要的查找次数刚好为该结点所在的层数; 
+         2. 查找成功时查找次数不会超过判定树的深度
+         3. n个结点的判定树的深度为[log2n]+1.
+     
+         4. 子树是不相交的；
+               5. 除了根结点外，每个结点有且仅有一个父结点；
+               6. 一棵N个结点的树有N-1条边。
+     */
+    #endregion
+
+    #region 3.1树的表现
+    //①儿子-兄弟表示
     public class Son_SiblingNode
     {
         // 二叉树
         Son_SiblingNode First_Child;
         Son_SiblingNode Next_Sibling;
     }
+    #endregion
 
-
-    // 3.2二叉树的存储结构
-    //      1. 顺序存储
-            //①完全二叉树：按从上至下、从左到右顺序存储
-            //①一般二叉树：但会造成空间浪费
-    //      2. 链式存储
-
-    public class TreeNode
-    {
-        public int data;
-        public TreeNode left;
-        public TreeNode right;
-        public TreeNode parent;//写着写着就变成了三叉树
-
-        public TreeNode(){}
-
-        public TreeNode(int value)
+    #region 3.2二叉树的存储结构
+        //1. 顺序存储
+        //    ①完全二叉树：按从上至下、从左到右顺序存储
+        //    ①一般二叉树：但会造成空间浪费
+        //2. 链式存储
+        public class TreeNode
         {
-            data = value;
-        }
-        public void DisplayData()
-        {
-            Console.Write(data + " ");
-        }
-    }
+            public int data;
+            public TreeNode left;
+            public TreeNode right;
+            //写着写着就变成了三叉树
+            public TreeNode parent;
+            //写平衡树加上的
+            public int height;
 
-    public interface ITree<T>
+
+        public TreeNode() { }
+
+            public TreeNode(int value)
+            {
+                data = value;
+            }
+            public void DisplayData()
+            {
+                Console.Write(data + " ");
+            }
+        }
+    #endregion
+
+    public interface ITree
     {
         int GetLength();
+        int GetHeight(TreeNode tree);
         bool IsEmpty();
         void Clear();
-        Node<T> Find(int i);
-        int Index(T node);
-        void Add(T item);
-        void Delete(int i);
-        void Insert(T item, int i);
+        TreeNode Find(int i);
+        TreeNode FindMax(TreeNode tree);
+        TreeNode FindMin(TreeNode tree);
+        void Delete(Tree tree, int i);
+        void Insert(Tree tree, int item);
         void Reverse();
     }
 
-    class Tree
+    public class Tree: ITree
     {
         private int m_Size = 0;
 
-        public TreeNode treeHead { get; private set; }
+        public TreeNode headNode { get; private set; }
         public Tree() { }
 
         public Tree(int data)
         {
-            treeHead = new TreeNode(data);
-            treeHead.left = null;
-            treeHead.right = null;
-            treeHead.parent = null;
+            headNode = new TreeNode(data);
+            headNode.left = null;
+            headNode.right = null;
+            headNode.parent = null;
+            headNode.height = 0;
             m_Size++;
         }
 
@@ -113,7 +122,11 @@ namespace DataStructure
             return m_Size;
         }
 
-        //求树的高度
+        /// <summary>
+        /// 求树的高度
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
         public int GetHeight(TreeNode tree)
         {
             int HeightL = 0, HeightR = 0;
@@ -123,7 +136,7 @@ namespace DataStructure
                 tempNode = tempNode.left;
                 HeightL += 1;
             }
-            tempNode = treeHead;
+            tempNode = headNode;
             if (tempNode!=null)
             {
                 tempNode = tempNode.left;
@@ -133,22 +146,33 @@ namespace DataStructure
             Console.WriteLine("HeightL:" + HeightL + "HeightR:" + HeightR);
             return (maxHeight + 1);
         }
-
+        /// <summary>
+        /// 判断是否为空
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty()
         {
-            return treeHead == null;
+            return headNode == null;
         }
 
         #region 增删改查
+        /// <summary>
+        /// 清空树
+        /// </summary>
         public void Clear()
         {
-            treeHead = new TreeNode();
-            treeHead.left = null;
-            treeHead.right = null;
-            treeHead.parent = null;
+            headNode = new TreeNode();
+            headNode.left = null;
+            headNode.right = null;
+            headNode.parent = null;
             m_Size = 0;
         }
 
+        /// <summary>
+        /// 查找并返回最大结点
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
         public TreeNode FindMax(TreeNode tree)
         {
             var tempNode = tree;
@@ -163,6 +187,11 @@ namespace DataStructure
             return tempNode;
         }
 
+        /// <summary>
+        /// 查找并返回最小结点
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <returns></returns>
         public TreeNode FindMin(TreeNode tree)
         {
             var tempNode = tree;
@@ -177,10 +206,15 @@ namespace DataStructure
             return tempNode;
         }
 
+        /// <summary>
+        /// 查找并返回指定结点，没找到返回null
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public TreeNode Find(int i)
         {
             TreeNode tempNode = new TreeNode();
-            tempNode = treeHead;
+            tempNode = headNode;
             while (tempNode != null)
             {
                 if (i < tempNode.data)
@@ -199,11 +233,15 @@ namespace DataStructure
             return null;
         }
 
-        // 二叉树的删除是最麻烦的，需要考虑四种情况：
-        //      被删节点是叶子节点
-        //      被删节点有左孩子没右孩子
-        //      被删节点有右孩子没左孩子
-        //      被删节点有两个孩子
+        /// <summary>
+        /// 二叉树的删除是最麻烦的，需要考虑四种情况：
+        ///   被删节点是叶子节点
+        ///   被删节点有左孩子没右孩子
+        ///   被删节点有右孩子没左孩子
+        ///   被删节点有两个孩子
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="i"></param>
         public void Delete(Tree tree, int i)
         {
             TreeNode tempNode = Find(i);
@@ -213,7 +251,7 @@ namespace DataStructure
                 return;
             }
 
-            if (tempNode == tree.treeHead)
+            if (tempNode == tree.headNode)
             {
                 tree = null;
             }
@@ -286,15 +324,20 @@ namespace DataStructure
             m_Size--;
         }
 
+        /// <summary>
+        /// 插入结点
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="item"></param>
         public void Insert(Tree tree, int item)
         {
             TreeNode newNode = new TreeNode(item);
-            if (treeHead == null)
+            if (headNode == null)
             {
-                treeHead = newNode;
+                headNode = newNode;
                 return;
             }
-            var tempNode = tree.treeHead;
+            var tempNode = tree.headNode;
             while (tempNode != null)
             {
                 if (newNode.data < tempNode.data)
@@ -492,8 +535,7 @@ namespace DataStructure
                 }
             }
         }
-#endregion
-
+        #endregion
 
     }
     class Program
@@ -512,27 +554,27 @@ namespace DataStructure
             //tree.Delete(tree, 2);
 
             Console.WriteLine("前序遍历");
-            tree.PreOrder(tree.treeHead);
+            tree.PreOrder(tree.headNode);
             Console.WriteLine();
-            tree.PreOrderNoRecursion(tree.treeHead);
+            tree.PreOrderNoRecursion(tree.headNode);
             Console.WriteLine();
             Console.WriteLine("中序遍历");
-            tree.InOrder(tree.treeHead);
+            tree.InOrder(tree.headNode);
             Console.WriteLine();
-            tree.InOrderNoRecursion(tree.treeHead);
+            tree.InOrderNoRecursion(tree.headNode);
             Console.WriteLine();
             Console.WriteLine("后序遍历");
-            tree.PostOrder(tree.treeHead);
+            tree.PostOrder(tree.headNode);
             Console.WriteLine();
-            tree.PostOrderNoRecursion(tree.treeHead);
+            tree.PostOrderNoRecursion(tree.headNode);
             Console.WriteLine();
             Console.WriteLine("层序遍历");
-            tree.LevelOrder(tree.treeHead);
+            tree.LevelOrder(tree.headNode);
 
             //tree.Find(5).DisplayData();
             Console.WriteLine();
             Console.WriteLine("GetLength：" + tree.GetLength());
-            Console.WriteLine("GetHeight：" + tree.GetHeight(tree.treeHead));
+            Console.WriteLine("GetHeight：" + tree.GetHeight(tree.headNode));
             Console.WriteLine("IsEmpty：" + tree.IsEmpty());
 
             //Console.Clear();
