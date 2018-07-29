@@ -65,7 +65,7 @@ namespace DataStructure
         public int data;
         public TreeNode left;
         public TreeNode right;
-        public TreeNode parent;
+        public TreeNode parent;//写着写着就变成了三叉树
 
         public TreeNode(){}
 
@@ -94,17 +94,17 @@ namespace DataStructure
 
     class Tree
     {
-        private TreeNode m_HeadNode;
         private int m_Size = 0;
 
+        public TreeNode treeHead { get; private set; }
         public Tree() { }
 
         public Tree(int data)
         {
-            m_HeadNode = new TreeNode(data);
-            m_HeadNode.left = null;
-            m_HeadNode.right = null;
-            m_HeadNode.parent = null;
+            treeHead = new TreeNode(data);
+            treeHead.left = null;
+            treeHead.right = null;
+            treeHead.parent = null;
             m_Size++;
         }
 
@@ -114,45 +114,50 @@ namespace DataStructure
         }
 
         //求树的高度
-        public int GetHeight()
+        public int GetHeight(TreeNode tree)
         {
             int HeightL = 0, HeightR = 0;
-            TreeNode tempNode = new TreeNode();
-            tempNode = m_HeadNode;
+            var tempNode = tree;
             while (tempNode != null)
             {
                 tempNode = tempNode.left;
                 HeightL += 1;
             }
-            tempNode = m_HeadNode;
+            tempNode = treeHead;
             if (tempNode!=null)
             {
                 tempNode = tempNode.left;
                 HeightR += 1;
             }
-            return Math.Max(HeightL, HeightR);
+            int maxHeight = Math.Max(HeightL, HeightR);
+            Console.WriteLine("HeightL:" + HeightL + "HeightR:" + HeightR);
+            return (maxHeight + 1);
         }
 
         public bool IsEmpty()
         {
-            return m_HeadNode == null;
+            return treeHead == null;
         }
 
+        #region 增删改查
         public void Clear()
         {
-            m_HeadNode = new TreeNode();
-            m_HeadNode.left = null;
-            m_HeadNode.right = null;
-            m_HeadNode.parent= null;
+            treeHead = new TreeNode();
+            treeHead.left = null;
+            treeHead.right = null;
+            treeHead.parent = null;
             m_Size = 0;
         }
 
         public TreeNode FindMax(TreeNode tree)
         {
-            TreeNode tempNode = new TreeNode();
-            tempNode = tree;
+            var tempNode = tree;
             while (tempNode != null)
             {
+                if (tempNode.right == null)
+                {
+                    break;
+                }
                 tempNode = tempNode.right;
             }
             return tempNode;
@@ -160,10 +165,13 @@ namespace DataStructure
 
         public TreeNode FindMin(TreeNode tree)
         {
-            TreeNode tempNode = new TreeNode();
-            tempNode = tree;
+            var tempNode = tree;
             while (tempNode != null)
             {
+                if (tempNode.left == null)
+                {
+                    break;
+                }
                 tempNode = tempNode.left;
             }
             return tempNode;
@@ -172,8 +180,8 @@ namespace DataStructure
         public TreeNode Find(int i)
         {
             TreeNode tempNode = new TreeNode();
-            tempNode = m_HeadNode;
-            while (tempNode!=null)
+            tempNode = treeHead;
+            while (tempNode != null)
             {
                 if (i < tempNode.data)
                 {
@@ -196,7 +204,7 @@ namespace DataStructure
         //      被删节点有左孩子没右孩子
         //      被删节点有右孩子没左孩子
         //      被删节点有两个孩子
-        public void Delete(int i)
+        public void Delete(Tree tree, int i)
         {
             TreeNode tempNode = Find(i);
             //If the value doesn't exist
@@ -205,9 +213,9 @@ namespace DataStructure
                 return;
             }
 
-            if (tempNode == m_HeadNode)
+            if (tempNode == tree.treeHead)
             {
-                m_HeadNode = null;
+                tree = null;
             }
 
             //No Children
@@ -227,7 +235,23 @@ namespace DataStructure
             //Two Children
             else if (tempNode.left != null && tempNode.right != null)
             {
-
+                //用另一结点替代被删除结点： 
+                //右子树的最小元素 
+                //或者  
+                //左子树的最大元素
+                var maxNode = FindMax(tempNode.left);
+                //maxNode.parent.right = null;
+                //先判断是父子树的什么结点
+                if (tempNode.data < tempNode.parent.data)
+                {
+                    tempNode.parent.left = maxNode;
+                }
+                else
+                {
+                    tempNode.parent.right = maxNode;
+                }
+                maxNode.parent = tempNode.parent;
+                maxNode.right = tempNode.right;
             }
 
             //One Children
@@ -259,47 +283,51 @@ namespace DataStructure
                     }
                 }
             }
+            m_Size--;
         }
 
-        public void Insert(int item)
+        public void Insert(Tree tree, int item)
         {
             TreeNode newNode = new TreeNode(item);
-            if (m_HeadNode == null)
+            if (treeHead == null)
             {
-                m_HeadNode = newNode;
+                treeHead = newNode;
                 return;
             }
-            TreeNode tempNode = m_HeadNode;
-            while (tempNode!=null)
+            var tempNode = tree.treeHead;
+            while (tempNode != null)
             {
                 if (newNode.data < tempNode.data)
                 {
-                    tempNode = tempNode.left;
-                    if (tempNode==null)
+                    if (tempNode.left == null)
                     {
                         tempNode.left = newNode;
+                        newNode.parent = tempNode;
                         break;
                     }
+                    tempNode = tempNode.left;
                 }
                 else
                 {
-                    tempNode = tempNode.right;
-                    if (tempNode == null)
+                    if (tempNode.right == null)
                     {
                         tempNode.right = newNode;
+                        newNode.parent = tempNode;
                         break;
                     }
+                    tempNode = tempNode.right;
                 }
             }
-           
+            m_Size++;
         }
 
         public void Reverse()
         {
             throw new NotImplementedException();
         }
-        // 3.3 二叉树的遍历
+        #endregion
 
+        #region 3.3 三叉树的遍历
         //以ABCDEFGHI为例子
 
         // (1)先序遍历:
@@ -307,7 +335,7 @@ namespace DataStructure
         // ②先序遍历左子树
         // ③先序遍历右子树
 
-        // 先序遍历递归版
+        // 先序遍历递归版(先中间，后两边)
         public void PreOrder(TreeNode tree)
         {
             if (tree == null)
@@ -319,7 +347,7 @@ namespace DataStructure
             PreOrder(tree.right);
         }
 
-        // (2)中序遍历
+        // (2)中序遍历(左中右)
         public void InOrder(TreeNode tree)
         {
             if (tree == null)
@@ -331,7 +359,7 @@ namespace DataStructure
             InOrder(tree.right);
         }
 
-        // (3)后序遍历
+        // (3)后序遍历（先左右，后中间）
         public void PostOrder(TreeNode tree)
         {
             if (tree == null)
@@ -345,7 +373,7 @@ namespace DataStructure
 
         // (4)层序遍历
         //从根节点开始入队，开始循环：（结点出队、访问该结点、其左右儿子入队）
-        public void LevelOrder(Tree tree)
+        public void LevelOrder(TreeNode tree)
         {
             if (tree == null)
             {
@@ -353,14 +381,14 @@ namespace DataStructure
             }
             //根节点开始入队
             Queue<TreeNode> queue = new Queue<TreeNode>();
-            queue.Enqueue(m_HeadNode);
+            queue.Enqueue(tree);
 
             TreeNode tempNode;
-            while (queue != null)
+            while (queue.Any())
             {
                 // 结点出队
                 tempNode = queue.Dequeue();
-
+                tempNode.DisplayData();
                 if (tempNode.left != null)
                 {
                     queue.Enqueue(tempNode.left);
@@ -372,66 +400,140 @@ namespace DataStructure
             }
         }
         // 先序遍历非递归版
-        //public void PreOrderEasy(TreeNode tree)
-        //{
-        //    if (tree == null)
-        //    {
-        //        return;
-        //    }
-        //    Stack<TreeNode> stack = new Stack<TreeNode>();
-        //    TreeNode node = tree;
-        //    while (node != null||stack.Any())
-        //    {
-        //        if (node != null)
-        //        {
-        //            stack.Push(node);/*一直向左并将沿途结点压入堆栈*/
-        //            node.DisplayData();
-        //            node = node.left;
-        //        }
-        //        else
-        //        {
-        //            var item = stack.Pop();/*结点弹出堆栈*/
-        //            node = item.right;/*转向右子树*/
-        //        }
-        //    }
-        //}
+        public void PreOrderNoRecursion(TreeNode tree)
+        {
+            if (tree == null)
+            {
+                return;
+            }
+            //建个空栈
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            var node = tree;
+            while (node != null || stack.Any())
+            {
+                if (node != null)
+                {
+                    /*一直向左并将沿途结点压入堆栈*/
+                    stack.Push(node);
+                    node.DisplayData();
+                    node = node.left;
+                }
+                else
+                {
+                    var item = stack.Pop();/*结点弹出堆栈*/
+                    node = item.right;/*转向右子树*/
+                }
+            }
+        }
+
+        //中序
+        public void InOrderNoRecursion(TreeNode tree)
+        {
+            if (tree == null)
+            {
+                return;
+            }
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            var node = tree;
+            while (node != null || stack.Any())
+            {
+                if (node != null)
+                {
+                    /*一直向左并将沿途结点压入堆栈*/
+                    stack.Push(node);
+                    node = node.left;
+                }
+                else
+                {
+                    var item = stack.Pop();/*结点弹出堆栈*/
+                    item.DisplayData();
+                    node = item.right;/*转向右子树*/
+                }
+            }
+        }
+
+        //后序
+        public void PostOrderNoRecursion(TreeNode tree)
+        {
+            if (tree == null)
+            {
+                return;
+            }
+            //建个空栈
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            HashSet<TreeNode> visited = new HashSet<TreeNode>();
+            var node = tree;
+            while (node != null || stack.Any())
+            {
+                if (node != null)
+                {
+                    /*一直向左并将沿途结点压入堆栈*/
+                    stack.Push(node);
+                    node = node.left;
+                }
+                else
+                {
+                    var item = stack.Peek();
+                    // 右结点不为空并且还没有访问过
+                    if (item.right != null && !visited.Contains(item.right))
+                    {
+                        /*转向右子树*/
+                        node = item.right;
+                    }
+                    else
+                    {
+                        //如果访问过就/*结点弹出堆栈*/
+                        item.DisplayData();
+                        visited.Add(item);
+                        stack.Pop();
+                    }
+                    //var item = stack.Pop();
+                    //node = item.right;
+                }
+            }
+        }
+#endregion
+
 
     }
     class Program
     {
-        //public static Tree<T> CreatFakeTree()
-        //{
-        //    Tree<T> tree = new Tree<T>() { Value = "A" };
-        //    tree.Left = new Tree<T>()
-        //    {
-        //        Value = "B",
-        //        Left = new Tree<T>() { Value = "D", Left = new Tree<T>() { Value = "G" } },
-        //        Right = new Tree<T>() { Value = "E", Right = new Tree<T>() { Value = "H" } }
-        //    };
-        //    tree.Right = new Tree<T>() { Value = "C", Right = new Tree<T>() { Value = "F" } };
-
-        //    return tree;
-        //}
         static void Main(string[] args)
         {
-            Tree<int> tree = new Tree<int>();
-            
-            //list.Add(2);
-            //list.Add(3);
-            //list.Add(4);
-            //list.Add(5);
-            //list.Delete(2);
+            Tree tree = new Tree(5);
+            tree.Insert(tree,2);
+            tree.Insert(tree,3);
+            tree.Insert(tree,4);
+            tree.Insert(tree,1);
+            tree.Insert(tree,6);
+            tree.Insert(tree,7);
+            tree.Insert(tree,8);
+            tree.Insert(tree,9);
+            //tree.Delete(tree, 2);
 
-            //Console.WriteLine(list.Find(1).data);
-            //Console.WriteLine(list.Index(4));
+            Console.WriteLine("前序遍历");
+            tree.PreOrder(tree.treeHead);
+            Console.WriteLine();
+            tree.PreOrderNoRecursion(tree.treeHead);
+            Console.WriteLine();
+            Console.WriteLine("中序遍历");
+            tree.InOrder(tree.treeHead);
+            Console.WriteLine();
+            tree.InOrderNoRecursion(tree.treeHead);
+            Console.WriteLine();
+            Console.WriteLine("后序遍历");
+            tree.PostOrder(tree.treeHead);
+            Console.WriteLine();
+            tree.PostOrderNoRecursion(tree.treeHead);
+            Console.WriteLine();
+            Console.WriteLine("层序遍历");
+            tree.LevelOrder(tree.treeHead);
 
-            //list.Insert(10,2);
-            //list.Insert(100, 0);
-
-            //list.InsertTop(10);
-
-            //Console.WriteLine(list.GetLength());
-            //Console.WriteLine(list.IsEmpty());
+            //tree.Find(5).DisplayData();
+            Console.WriteLine();
+            Console.WriteLine("GetLength：" + tree.GetLength());
+            Console.WriteLine("GetHeight：" + tree.GetHeight(tree.treeHead));
+            Console.WriteLine("IsEmpty：" + tree.IsEmpty());
 
             //Console.Clear();
 
