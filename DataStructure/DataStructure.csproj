@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChainList.cs" />
+    <Compile Include="Heap.cs" />
     <Compile Include="InfixToSuffix.cs" />
     <Compile Include="LinkListTest.cs" />
     <Compile Include="Ploynomial.cs" />
