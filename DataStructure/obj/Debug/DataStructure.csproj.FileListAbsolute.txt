@@ -1,7 +1,0 @@
-F:\ShaderLearn\DataStructure\obj\Debug\DataStructure.csprojAssemblyReference.cache
-F:\ShaderLearn\DataStructure\obj\Debug\DataStructure.csproj.CoreCompileInputs.cache
-F:\ShaderLearn\DataStructure\bin\Debug\DataStructure.exe.config
-F:\ShaderLearn\DataStructure\bin\Debug\DataStructure.exe
-F:\ShaderLearn\DataStructure\bin\Debug\DataStructure.pdb
-F:\ShaderLearn\DataStructure\obj\Debug\DataStructure.exe
-F:\ShaderLearn\DataStructure\obj\Debug\DataStructure.pdb
