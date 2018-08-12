@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaderLearn", "ShaderLearn.csproj", "{61F67C70-F491-EE5A-0AE3-E64073B4F853}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaderLearn.Editor", "ShaderLearn.Editor.csproj", "{971EE9F7-D6CF-93AB-8AA1-1797AD6135D2}"
@@ -30,8 +28,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F1D36287-8BFC-4EA8-BD05-76A0A1DF88D7}
 	EndGlobalSection
 EndGlobal
