@@ -67,6 +67,20 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _showBinormal: 0
+    - _showFractional1: 0
+    - _showFractional2: 0
+    - _showNormal: 0
+    - _showTangent: 0
+    - _showTexcoord0: 0
+    - _showTexcoord1: 0
+    - _showTexcoord2: 0
+    - _showTexcoord3: 0
+    - _showTexcoord4: 0.5
+    - _showTexcoord5: 0.5
+    - _showTexcoord6: 0.5
+    - _showTexcoord7: 0.418
+    - _showVertex: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
