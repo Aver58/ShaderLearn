@@ -18,7 +18,19 @@ Shader "Unity Shaders Book/Chapter 12/Gaussian Blur" {
 			float4 pos : SV_POSITION;
 			half2 uv[5]: TEXCOORD0;
 		};
-		  
+		
+		/*
+		一个5*5的高斯核
+		0.0030  0.0133  0.0219  0.0133  0.0030												0.0545
+			    	    	    	    
+		0.0133  0.0596  0.0983  0.0596  0.0133												0.2442
+			    	    	    	    
+		0.0219  0.0983  0.1621  0.0983  0.0219  ==> [0.0545 0.2442 0.4026 0.2442 0.0545] *  0.4026
+			    	    	    	    
+		0.0133  0.0596  0.0983  0.0596  0.0133												0.2442
+			    	    	    	    
+		0.0030  0.0133  0.0219  0.0133  0.0030												0.0545
+		*/
 		v2f vertBlurVertical(appdata_img v) {
 			v2f o;
 			o.pos = UnityObjectToClipPos(v.vertex);
@@ -40,11 +52,11 @@ Shader "Unity Shaders Book/Chapter 12/Gaussian Blur" {
 			
 			half2 uv = v.texcoord;
 			
-			o.uv[0] = uv;
-			o.uv[1] = uv + float2(_MainTex_TexelSize.x * 1.0, 0.0) * _BlurSize;
-			o.uv[2] = uv - float2(_MainTex_TexelSize.x * 1.0, 0.0) * _BlurSize;
-			o.uv[3] = uv + float2(_MainTex_TexelSize.x * 2.0, 0.0) * _BlurSize;
-			o.uv[4] = uv - float2(_MainTex_TexelSize.x * 2.0, 0.0) * _BlurSize;
+			o.uv[0] = uv;// 高斯核正中心
+			o.uv[1] = uv + float2(_MainTex_TexelSize.x * 1.0, 0.0) * _BlurSize;//高斯核正中心→1
+			o.uv[2] = uv - float2(_MainTex_TexelSize.x * 1.0, 0.0) * _BlurSize;//高斯核正中心←1
+			o.uv[3] = uv + float2(_MainTex_TexelSize.x * 2.0, 0.0) * _BlurSize;//高斯核正中心→2
+			o.uv[4] = uv - float2(_MainTex_TexelSize.x * 2.0, 0.0) * _BlurSize;//高斯核正中心←2
 					 
 			return o;
 		}
