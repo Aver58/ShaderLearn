@@ -1,8 +1,6 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+﻿//520.5逐像素高光
 
-Shader "Unlit/520.5逐像素高光"
+Shader "_Aver3/Specular Pixel-Level"
 {
 	Properties
 	{
@@ -25,27 +23,18 @@ Shader "Unlit/520.5逐像素高光"
 			fixed4 _Specular;
 			float _Gloss;
 
-			struct appdata
-			{
-				float4 vertex : POSITION;
-				float3 normal:NORMAL;
-
-			};
-
 			struct v2f
 			{
 				float4 pos:SV_POSITION;
-				fixed3 worldNormal : TEXCOORD0;
+				fixed3 normal : TEXCOORD0;
 				fixed3 viewDir : TEXCOORD1;
 			};
 			
-			v2f vert (appdata v)
+			v2f vert (appdata_base v)
 			{
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.worldNormal = normalize(mul(v.normal,(float3x3)unity_WorldToObject));
-	
-				//计算世界空间下的观察方向
+				o.normal = v.normal;
 				o.viewDir = normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld,v.vertex).xyz);
 				
 				return o;
@@ -56,7 +45,7 @@ Shader "Unlit/520.5逐像素高光"
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
-				fixed3 worldNormal = i.worldNormal;
+				fixed3 worldNormal = UnityObjectToWorldNormal(i.normal);
 
 				fixed3 diffuse = _LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal, worldLightDir));
 

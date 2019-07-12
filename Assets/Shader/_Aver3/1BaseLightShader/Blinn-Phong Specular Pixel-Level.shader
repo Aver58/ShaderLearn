@@ -1,8 +1,5 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Unlit/520.6Blinn-Phong逐像素"
+﻿//20180520 Blinn-Phong逐像素
+Shader "_Aver3/Blinn-Phong Specular Pixel-Level"
 {
 	Properties
 	{
@@ -25,13 +22,6 @@ Shader "Unlit/520.6Blinn-Phong逐像素"
 			fixed4 _Specular;
 			float _Gloss;
 
-			struct appdata
-			{
-				float4 vertex : POSITION;
-				float3 normal:NORMAL;
-
-			};
-
 			struct v2f
 			{
 				float4 pos:SV_POSITION;
@@ -39,11 +29,11 @@ Shader "Unlit/520.6Blinn-Phong逐像素"
 				fixed3 viewDir : TEXCOORD1;
 			};
 			
-			v2f vert (appdata v)
+			v2f vert (appdata_base v)
 			{
 				v2f o;
 				o.pos = UnityObjectToClipPos(v.vertex);
-				o.worldNormal = normalize(mul(v.normal,(float3x3)unity_WorldToObject));
+				o.worldNormal = UnityObjectToWorldNormal(v.normal);//normalize(mul(v.normal,(float3x3)unity_WorldToObject));
 	
 				//计算世界空间下的观察方向
 				o.viewDir = normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld,v.vertex).xyz);
@@ -56,13 +46,15 @@ Shader "Unlit/520.6Blinn-Phong逐像素"
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
-				fixed3 worldNormal = i.worldNormal;
+				fixed3 worldNormal = normalize(i.worldNormal);
 
 				fixed3 diffuse = _LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal, worldLightDir));
 				
 				fixed3 viewDir = i.viewDir;
 				fixed3 halfDir = normalize(worldLightDir+viewDir);
-				//计算高光反射部分
+				// 计算高光反射部分
+				// 高光 = （入射光 * 高光反射系数） * （max（0，法线方向·h矢量））^ 高光指数
+				// h矢量 = (视角方向 + 光照方向) / 视角方向 + 光照方向 的模
 				fixed3 specular = _LightColor0.rgb*_Specular.rgb*pow(saturate(dot(halfDir, worldNormal)), _Gloss);
 				return fixed4(ambient+diffuse+specular,1.0);
 			}

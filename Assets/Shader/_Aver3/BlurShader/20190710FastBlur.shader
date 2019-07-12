@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex("Base (RGB)", 2D) = "white" {}
+		_blurSize ("Blur Size", Range(0,10)) = 1.0
 	}
 	SubShader
 	{
@@ -26,27 +27,23 @@
 			float4 _MainTex_ST;
 			float4 _MainTex_TexelSize;
 
-			struct a2v
-			{
+			struct a2v{
 				float2 uv : TEXCOORD0;
-				float4 position  : POSITION;
+				float4 vertex : POSITION;
 			};
 
-			struct v2f
-			{
+			struct v2f{
+				float4 pos : SV_POSITION;
 				float2 uv : TEXCOORD0;
-				UNITY_FOG_COORDS(1)
-				float4 vertex : SV_POSITION;
 				float2 offsetuv[4] : TEXCOORD1;
 			};
 
-			v2f vert (a2v v)
-			{
+			v2f vert(a2v IN){
 				v2f o;
-				o.vertex = UnityObjectToClipPos(v.position);
-				//TRANSFORM_TEX将模型顶点的uv和Tiling、Offset两个变量进行运算，计算出实际显示用的定点uv。
-				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				UNITY_TRANSFER_FOG(o,o.vertex);
+				o.pos = UnityObjectToClipPos(IN.vertex);
+				// 处理UV的till和offset
+				o.uv = TRANSFORM_TEX(IN.uv, _MainTex);
+
 				// 为啥这个常量放在顶点函数外面效果差这么多？？？todo
 				float2 offsetWeight[4] = {
 					float2(0, 1),
@@ -55,10 +52,11 @@
 					float2(0, -1)
 				};
 				// 取周围4个像素做模糊
-				o.offsetuv[0] = o.uv.xy + float2(offsetWeight[0].x,offsetWeight[0].y) * _MainTex_TexelSize * _blurSize;
-				o.offsetuv[1] = o.uv.xy + float2(offsetWeight[1].x,offsetWeight[1].y) * _MainTex_TexelSize * _blurSize;
-				o.offsetuv[2] = o.uv.xy + float2(offsetWeight[2].x,offsetWeight[2].y) * _MainTex_TexelSize * _blurSize;
-				o.offsetuv[3] = o.uv.xy + float2(offsetWeight[3].x,offsetWeight[3].y) * _MainTex_TexelSize * _blurSize;
+				o.offsetuv[0] = o.uv.xy + float2(offsetWeight[0].x, offsetWeight[0].y) * _MainTex_TexelSize * _blurSize;
+				o.offsetuv[1] = o.uv.xy + float2(offsetWeight[1].x, offsetWeight[1].y) * _MainTex_TexelSize * _blurSize;
+				o.offsetuv[2] = o.uv.xy + float2(offsetWeight[2].x, offsetWeight[2].y) * _MainTex_TexelSize * _blurSize;
+				o.offsetuv[3] = o.uv.xy + float2(offsetWeight[3].x, offsetWeight[3].y) * _MainTex_TexelSize * _blurSize;
+
 				return o;
 			}
 			

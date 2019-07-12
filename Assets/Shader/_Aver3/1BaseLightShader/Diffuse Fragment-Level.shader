@@ -1,6 +1,5 @@
-﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-//逐像素漫反射实现
-Shader "Unlit/520.1"
+﻿//逐像素漫反射实现
+Shader "_Aver3/Diffuse Pixel-Level"
 {
 	Properties{
 		_Diffuse("DiffuseColor",Color) = (1.0,1.0,1.0,1.0)
@@ -19,18 +18,14 @@ Shader "Unlit/520.1"
 	
 		//定义与属性相同类型和相同名称的变量
 		fixed4 _Diffuse;
-		//定义顶点着色器输入结构体
-		struct a2v {
-			float4 vertex:POSITION;
-			float3 normal:NORMAL;
-		};
-			//定义顶点着色器输出结构体（片元着色器输入结构体）
+	
+		//定义顶点着色器输出结构体（片元着色器输入结构体）
 		struct v2f {
 			float4 pos:SV_POSITION;
 			float3 worldNormal:TEXCOORD0;
 		};
 		
-		v2f vert(a2v v) {
+		v2f vert(appdata_base v) {
 			v2f o;
 			o.pos = UnityObjectToClipPos(v.vertex);
 			//存储世界空间下的法线，传递给片元着色器，
@@ -43,9 +38,7 @@ Shader "Unlit/520.1"
 			fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 			fixed3 worldNormal = normalize(i.worldNormal);
 			fixed3 worldLight = normalize(_WorldSpaceLightPos0);
-		
-			fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb
-											  * saturate(dot(worldNormal,worldLight));
+			fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(worldNormal,worldLight));
 		
 			fixed3 color = diffuse + ambient;
 			return fixed4(color,1.0);

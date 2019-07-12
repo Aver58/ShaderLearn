@@ -1,20 +1,19 @@
-﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-//半兰伯特(Half Lambert)光照模型
-Shader "Unlit/520.3"
+﻿//半兰伯特(Half Lambert)光照模型
+//半兰伯特漫反射实现
+Shader "_Aver3/Half Lambert"
 {
 	Properties{
 		_Diffuse("DiffuseColor",Color) = (1.0,1.0,1.0,1.0)
 	}
 	
-		SubShader{
+	SubShader
+	{
 		Pass{
-		//定义光照模式，只有正确定光照模式，才能得到一些Unity内置光照变量
 		Tags{"LightMode" = "ForwardBase"}
 	
 		CGPROGRAM
 		#pragma vertex vert
 		#pragma fragment frag
-		//使用Unity的内置包含文件，使用其内置变量
 		#include "Lighting.cginc"
 	
 		//定义与属性相同类型和相同名称的变量
@@ -24,7 +23,7 @@ Shader "Unlit/520.3"
 			float4 vertex:POSITION;
 			float3 normal:NORMAL;
 		};
-			//定义顶点着色器输出结构体（片元着色器输入结构体）
+		//定义顶点着色器输出结构体（片元着色器输入结构体）
 		struct v2f {
 			float4 pos:SV_POSITION;
 			fixed3 color : COLOR;
@@ -35,8 +34,9 @@ Shader "Unlit/520.3"
 			o.pos = UnityObjectToClipPos(v.vertex);
 		
 			fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
-			//通过模型到世界的转置逆矩阵计算得到世界空间内的顶点法向方向（v.normal存储的是模型空间内的顶点法线方向）
-			fixed3 worldNormal = normalize(mul(v.normal,(float3x3)unity_WorldToObject));
+			//通过模型到世界的转置逆矩阵计算得到世界空间内的顶点法线方向（v.normal存储的是模型空间内的顶点法线方向）
+			//fixed3 worldNormal = normalize(mul(v.normal,(float3x3)unity_WorldToObject));
+			fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
 			//得到世界空间内的光线方向
 			fixed3 worldLight = normalize(_WorldSpaceLightPos0.xyz);
 		
