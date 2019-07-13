@@ -26,7 +26,7 @@ Shader "_Aver3/Blinn-Phong Specular Pixel-Level"
 			{
 				float4 pos:SV_POSITION;
 				fixed3 worldNormal : TEXCOORD0;
-				fixed3 viewDir : TEXCOORD1;
+				float4 worldPos : TEXCOORD1; 
 			};
 			
 			v2f vert (appdata_base v)
@@ -35,9 +35,8 @@ Shader "_Aver3/Blinn-Phong Specular Pixel-Level"
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);//normalize(mul(v.normal,(float3x3)unity_WorldToObject));
 	
-				//计算世界空间下的观察方向
-				o.viewDir = normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld,v.vertex).xyz);
-				
+				// 有时候又想要正确填充坐标，又想要世界坐标怎么办，？？？float4 worldPos : TEXCOORD1; 还能这样搞的？
+				o.worldPos = mul(unity_ObjectToWorld, v.vertex);
 				return o;
 			}
 			
@@ -45,13 +44,13 @@ Shader "_Aver3/Blinn-Phong Specular Pixel-Level"
 			{
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 
-				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+				fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));//_WorldSpaceLightPos0.xyz
 				fixed3 worldNormal = normalize(i.worldNormal);
 
 				fixed3 diffuse = _LightColor0.rgb*_Diffuse.rgb*saturate(dot(worldNormal, worldLightDir));
 				
-				fixed3 viewDir = i.viewDir;
-				fixed3 halfDir = normalize(worldLightDir+viewDir);
+				fixed3 viewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));//normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld,v.vertex).xyz);
+				fixed3 halfDir = normalize(worldLightDir + viewDir);
 				// 计算高光反射部分
 				// 高光 = （入射光 * 高光反射系数） * （max（0，法线方向·h矢量））^ 高光指数
 				// h矢量 = (视角方向 + 光照方向) / 视角方向 + 光照方向 的模
