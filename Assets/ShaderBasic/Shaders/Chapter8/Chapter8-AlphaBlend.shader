@@ -14,7 +14,7 @@ Shader "Unity Shaders Book/Chapter 8/Alpha Blend" {
 			Tags { "LightMode"="ForwardBase" }
 
 			ZWrite Off
-			Blend SrcAlpha OneMinusSrcAlpha
+			Blend SrcAlpha SrcAlpha//SrcAlpha OneMinusSrcAlpha
 			
 			CGPROGRAM
 			
